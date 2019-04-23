@@ -1,7 +1,6 @@
 package com.example.mvvmapp.viewModel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -22,7 +21,7 @@ class MainActivityVM: ViewModel() {
             testLiveData = MutableLiveData()
         }*/
         str = "Bangladeshiiiiiiiiiiiiiiii"
-        testLiveData?.value = str
+        testLiveData.value = str
         Log.d("test2LD2","test is working: $str and ld: $testLiveData")
         return testLiveData
     }
@@ -32,16 +31,21 @@ class MainActivityVM: ViewModel() {
         return testLiveData
     }
 
-    fun setName() {
-        str = "Bangladeshiiiiiiiiiiiiiiii"
+    fun setName(str: String?) {
         //testLiveData.value = str
+        testLiveData.postValue(str)
         Log.d("test2","test value set with $str")
     }
 
-    fun getName(): String {
+    fun getName(): MutableLiveData<String>? {
         Log.d("test3","test value get: ${testLiveData.value}")
         //return testLiveData
-        return str
+        return if (!testLiveData.value.isNullOrEmpty()) {
+            testLiveData
+        } else {
+            testLiveData.value = "Nothing inside"
+            testLiveData
+        }
     }
 
 
