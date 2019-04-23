@@ -1,5 +1,6 @@
 package com.example.mvvmapp.view.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainActivityVM
     private var liveValue = "Default value"
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProviders.of(this@MainActivity).get(MainActivityVM::class.java)
@@ -37,14 +39,15 @@ class MainActivity : AppCompatActivity() {
         }, 3000)*/
 
         btnCheck.setOnClickListener {
+            liveValue = etInputField.text.toString()
+            mainViewModel.setName(liveValue)
+            Log.d("state2", "Value: $liveValue")
+            //Toast.makeText(this@MainActivity, str, Toast.LENGTH_LONG).show()
+            tvTest.text = "OnButtonClicked $liveValue"
+        }
 
+        btnCheck1.setOnClickListener {
             startActivity(Intent(this@MainActivity, ListActivity::class.java))
-
-            /* liveValue = etInputField.text.toString()
-             mainViewModel.setName(liveValue)
-             Log.d("state2", "Value: $liveValue")
-                 //Toast.makeText(this@MainActivity, str, Toast.LENGTH_LONG).show()
-             tvTest.text = "OnButtonClicked $liveValue"*/
         }
     }
 }

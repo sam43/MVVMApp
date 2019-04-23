@@ -11,6 +11,7 @@ import com.example.mvvmapp.models.ItemModel
 import com.example.mvvmapp.view.adapter.GenericAdapter
 import com.example.mvvmapp.view.adapter.viewHolders.ViewHolderFactory
 import kotlinx.android.synthetic.main.layout_recyclerview.*
+import kotlin.random.Random
 
 class ListActivity : AppCompatActivity() {
 
@@ -52,6 +53,16 @@ class ListActivity : AppCompatActivity() {
         listBuses.add(item)
         item = BusItemModel("Volks Wagon", "Black")
         listBuses.add(item)
+        item = BusItemModel("Mercedes A370", "Gray")
+        listBuses.add(item)
+        item = BusItemModel("Toyota", "Royal Blue")
+        listBuses.add(item)
+        item = BusItemModel("Ford 430D", "Yellow")
+        listBuses.add(item)
+        item = BusItemModel("Hino 345", "White")
+        listBuses.add(item)
+        item = BusItemModel("Royal Roach", "Black")
+        listBuses.add(item)
     }
 
     override fun onResume() {
@@ -60,6 +71,7 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun setupAdapter() {
+        val randomVal = Random.nextInt(0, 3)
         val myAdapter = object : GenericAdapter<Any>() {
             override fun getLayoutId(position: Int, obj: Any): Int {
                 return when (obj) {
@@ -73,8 +85,11 @@ class ListActivity : AppCompatActivity() {
                 return ViewHolderFactory.create(view, viewType)
             }
         }
-        //myAdapter.setItems(listColors)
-        myAdapter.setItems(listBuses)
+        if (randomVal == 1) {
+            myAdapter.setItems(listColors)
+        } else {
+            myAdapter.setItems(listBuses)
+        }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = myAdapter
