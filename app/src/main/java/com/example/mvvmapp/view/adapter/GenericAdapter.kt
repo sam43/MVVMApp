@@ -4,21 +4,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mvvmapp.interfaces.BaseRecyclerListener
 
 /**
  * Created by Sayem.
  */
-abstract class GenericAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder> {
+abstract class GenericAdapter<T, L : BaseRecyclerListener> : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    var listItems: List<T>
+    private var listItems: List<T> = ArrayList()
+    private lateinit var listener: L
 
     constructor(listItems: List<T>) {
         this.listItems = listItems
     }
 
     constructor() {
-        listItems = emptyList()
+        this.listItems = emptyList()
+    }
+
+    constructor(listen: L) {
+        this.listener = listen
     }
 
     fun setItems(listItems: List<T>) {

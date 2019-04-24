@@ -10,6 +10,7 @@ import com.example.mvvmapp.view.adapter.GenericAdapter
 
 class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         GenericAdapter.Binder<ItemModel> {
+
     var tvItem: TextView = itemView.findViewById(R.id.tvItem)
     override fun bind(data: ItemModel) {
         tvItem.text = data.color
