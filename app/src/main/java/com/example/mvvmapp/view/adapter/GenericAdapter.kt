@@ -1,30 +1,28 @@
 package com.example.mvvmapp.view.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mvvmapp.interfaces.BaseRecyclerListener
+
 
 /**
  * Created by Sayem.
  */
-abstract class GenericAdapter<T, L : BaseRecyclerListener> : RecyclerView.Adapter<RecyclerView.ViewHolder> {
+abstract class GenericAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     private var listItems: List<T> = ArrayList()
-    private lateinit var listener: L
+    private lateinit var cxt: Context
 
     constructor(listItems: List<T>) {
         this.listItems = listItems
     }
 
-    constructor() {
+    constructor(context: Context) {
+        this.cxt = context
         this.listItems = emptyList()
-    }
-
-    constructor(listen: L) {
-        this.listener = listen
     }
 
     fun setItems(listItems: List<T>) {
@@ -33,14 +31,20 @@ abstract class GenericAdapter<T, L : BaseRecyclerListener> : RecyclerView.Adapte
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        //val holder = setViewHolder(parent, listener)
         return getViewHolder(
                 LayoutInflater.from(parent.context)
                         .inflate(viewType, parent, false)
                 , viewType)
+        //return holder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as Binder<T>).bind(listItems[position])
+        holder.itemView.setOnClickListener {
+            (holder as Binder<T>).onClickListener(listItems[position])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -57,5 +61,6 @@ abstract class GenericAdapter<T, L : BaseRecyclerListener> : RecyclerView.Adapte
 
     internal interface Binder<T> {
         fun bind(data: T)
+        fun onClickListener(data: T)
     }
 }

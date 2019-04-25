@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmapp.R
-import com.example.mvvmapp.interfaces.OnRecyclerItemClickListener
 import com.example.mvvmapp.models.BusItemModel
 import com.example.mvvmapp.models.ItemModel
 import com.example.mvvmapp.view.adapter.GenericAdapter
@@ -73,17 +72,20 @@ class ListActivity : AppCompatActivity() {
 
     private fun setupAdapter() {
         val randomVal = Random.nextInt(0, 3)
-        val myAdapter = object : GenericAdapter<Any, OnRecyclerItemClickListener>() {
+        val myAdapter = object : GenericAdapter<Any>(this) {
+            override fun getViewHolder(
+                view: View,
+                viewType: Int
+            ): RecyclerView.ViewHolder {
+                return ViewHolderFactory.create(view, viewType, this@ListActivity)
+            }
+
             override fun getLayoutId(position: Int, obj: Any): Int {
                 return when (obj) {
                     is ItemModel -> R.layout.car_item_layout
                     is BusItemModel -> R.layout.bus_item_layout
                     else -> R.layout.car_item_layout
                 }
-            }
-
-            override fun getViewHolder(view: View, viewType: Int): RecyclerView.ViewHolder {
-                return ViewHolderFactory.create(view, viewType)
             }
         }
         if (randomVal == 1) {
