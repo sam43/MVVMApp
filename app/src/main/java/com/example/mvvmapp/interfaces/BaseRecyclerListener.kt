@@ -1,3 +1,0 @@
-package com.example.mvvmapp.interfaces
-
-interface BaseRecyclerListener

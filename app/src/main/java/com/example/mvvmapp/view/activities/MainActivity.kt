@@ -10,7 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.mvvmapp.R
 import com.example.mvvmapp.viewModel.MainActivityVM
+import com.sam43.customtextview.LoggingClass
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        LoggingClass.error("Here is the error...from my own library")
         mainViewModel = ViewModelProviders.of(this@MainActivity).get(MainActivityVM::class.java)
         setContentView(R.layout.activity_main)
         //mainViewModel.setName()
@@ -48,6 +51,14 @@ class MainActivity : AppCompatActivity() {
 
         btnCheck1.setOnClickListener {
             startActivity(Intent(this@MainActivity, ListActivity::class.java))
+        }
+
+        btnCheck2.setOnClickListener {
+            startActivity<TestActivity>(
+                "id" to 5,
+                "amount" to 2500
+        )
+           // startActivity(Intent(this@MainActivity, TestActivity::class.java))
         }
     }
 }
