@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.sam43.customtextview.LoggingClass
 
 
 /**
@@ -41,6 +42,7 @@ abstract class GenericAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        LoggingClass.debug("value: ${listItems[position]}")
         (holder as Binder<T>).bind(listItems[position])
         holder.itemView.setOnClickListener {
             (holder as Binder<T>).onClickListener(listItems[position])

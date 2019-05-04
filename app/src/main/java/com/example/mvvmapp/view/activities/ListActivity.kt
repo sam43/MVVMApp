@@ -1,28 +1,48 @@
 package com.example.mvvmapp.view.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmapp.R
 import com.example.mvvmapp.models.BusItemModel
+import com.example.mvvmapp.models.Demo
 import com.example.mvvmapp.models.ItemModel
 import com.example.mvvmapp.view.adapter.GenericAdapter
 import com.example.mvvmapp.view.adapter.viewHolders.ViewHolderFactory
+import com.example.mvvmapp.viewModel.ListActivityVM
+import com.sam43.customtextview.LoggingClass
 import kotlinx.android.synthetic.main.layout_recyclerview.*
 import kotlin.random.Random
 
 class ListActivity : AppCompatActivity() {
 
+    private lateinit var listVM: ListActivityVM
+    private var myAdapter: GenericAdapter<Any>? = null
     private var listColors: ArrayList<ItemModel> = ArrayList()
     private var listBuses: ArrayList<BusItemModel> = ArrayList()
+    private var listUsers: List<Demo.UData> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        listVM = ViewModelProviders.of(this).get(ListActivityVM::class.java)
         setContentView(R.layout.layout_recyclerview)
+
         populateData()
         populateBusData()
+    }
+
+    private fun observeViewModel(vm: ListActivityVM) {
+        vm.getUserListObservable().observe(this, Observer<Demo> {
+            listUsers = it.uData as List<Demo.UData>
+            Log.d("Demo", "${listUsers.size} and ${it?.uData[1].type}")
+            myAdapter?.setItems(listUsers)
+            LoggingClass.debug("list: $listUsers // ${listUsers.size} and // $")
+        })
     }
 
     private fun populateData() {
@@ -71,8 +91,7 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun setupAdapter() {
-        val randomVal = Random.nextInt(0, 3)
-        val myAdapter = object : GenericAdapter<Any>(this) {
+        myAdapter = object : GenericAdapter<Any>(this) {
             override fun getViewHolder(
                 view: View,
                 viewType: Int
@@ -84,15 +103,17 @@ class ListActivity : AppCompatActivity() {
                 return when (obj) {
                     is ItemModel -> R.layout.car_item_layout
                     is BusItemModel -> R.layout.bus_item_layout
-                    else -> R.layout.car_item_layout
+                    else -> R.layout.user_item_layout
                 }
             }
         }
-        if (randomVal == 1) {
-            myAdapter.setItems(listColors)
-        } else {
-            myAdapter.setItems(listBuses)
+
+        when (Random.nextInt(0, 3)) {
+            1 -> myAdapter?.setItems(listColors)
+            0 -> myAdapter?.setItems(listBuses)
+            else -> observeViewModel(listVM)
         }
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = myAdapter
