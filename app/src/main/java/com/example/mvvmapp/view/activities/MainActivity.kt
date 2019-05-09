@@ -54,11 +54,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnCheck2.setOnClickListener {
-            startActivity<TestActivity>(
+            /*startActivity<TestActivity>(
                 "id" to 5,
                 "amount" to 2500
-        )
-           // startActivity(Intent(this@MainActivity, TestActivity::class.java))
+        )*/
+            startActivity<DataBindingActivity>()
         }
     }
 }
