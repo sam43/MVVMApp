@@ -1,9 +1,10 @@
 package com.example.mvvmapp.repositories
 
 import com.example.mvvmapp.models.Demo
+import com.example.mvvmapp.models.ServerResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 
 interface APIService {
@@ -16,5 +17,15 @@ interface APIService {
 */
     @GET("api/json/get/ceOpxZpzYi?indent=2")
     fun getDemoResponse(): Call<Demo>
+
+    @GET("/data/2.5/{movie_id}/getDetails")
+    fun getMovieDatils(@Path("movie_id") movieID: String): Call<Demo>
+
+
+    @Multipart
+    @POST("upload")
+    fun uploadFile(
+        @Part map: MultipartBody.Part
+    ): Call<ServerResponse>
 
 }

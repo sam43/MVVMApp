@@ -4,6 +4,8 @@
           package="com.example.mvvmapp">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
             android:allowBackup="true"
@@ -13,9 +15,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
-            tools:ignore="AllowBackup,GoogleAppIndexingWarning" tools:targetApi="m">
-        <activity android:name=".view.activities.DataBindingActivity"
-                  android:theme="@style/AppTheme"/>
+            tools:ignore="AllowBackup,GoogleAppIndexingWarning"
+            tools:targetApi="m">
+        <activity android:name=".view.activities.ImageUploadActivity">
+        </activity>
+        <activity
+                android:name=".view.activities.DataBindingActivity"
+                android:theme="@style/AppTheme"/>
         <activity android:name=".view.activities.TestActivity">
         </activity>
         <activity android:name=".view.activities.ListActivity"/>

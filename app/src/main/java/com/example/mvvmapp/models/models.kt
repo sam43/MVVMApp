@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName
 data class ItemModel(
     val color: String? = ""
 )
-
 data class BusItemModel(
     val busBrand: String? = "",
     val busColor: String? = ""
@@ -61,3 +60,33 @@ data class Demo (
         }
     }
 }
+
+data class ServerResponse(
+    @SerializedName("data")
+    val responseData: Data? = Data(),
+    @SerializedName("message")
+    val responseMessage: Message? = Message()
+)
+
+data class Message(
+    @SerializedName("en")
+    val responseEn: String? = ""
+)
+
+data class Data(
+    @SerializedName("results")
+    val responseResults: List<Result?>? = listOf()
+)
+
+data class Result(
+    @SerializedName("Bucket")
+    val responseBucket: String? = "",
+    @SerializedName("ETag")
+    val responseETag: String? = "",
+    @SerializedName("key")
+    val responsekey: String? = "",
+    @SerializedName("Key")
+    val responseKey: String? = "",
+    @SerializedName("Location")
+    val responseLocation: String? = ""
+)
