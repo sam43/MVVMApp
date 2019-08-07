@@ -53,12 +53,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, ListActivity::class.java))
         }
 
+        btnCheck2.text = "Multipart file upload"
         btnCheck2.setOnClickListener {
             /*startActivity<TestActivity>(
                 "id" to 5,
                 "amount" to 2500
         )*/
-            startActivity<DataBindingActivity>()
+            startActivity<ImageUploadActivity>()
         }
     }
 }
