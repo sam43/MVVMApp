@@ -1,5 +1,6 @@
 package com.example.mvvmapp.models
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
@@ -60,4 +61,10 @@ data class Demo (
             }
         }
     }
+
+    data class Student (
+        val name: String? = null,
+        val age: Int? = null
+    )
+
 }
